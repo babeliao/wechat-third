@@ -1,12 +1,12 @@
 wechat-component
 ===============
 
-公众号第三方平台组件，五分钟通过微信全网发布检测
+公众号第三方平台模块，五分钟通过微信全网发布检测
 ## Install
 
 [![NPM](https://nodei.co/npm/wechat-third.png?downloads=true)](https://nodei.co/npm/wechat-third/)
 
-将组件放到dependencies中
+将模块放到dependencies中
 
 ```
 npm install wechat-third --save
@@ -14,7 +14,7 @@ npm install wechat-third --save
 
 ## Getting Start
 
-该组件使用了async/await，请使用node7+或者使用babel。这里展示组件在koa2中的使用
+该模块使用了async/await，请使用node7+或者使用babel。这里展示模块在koa2中的使用
 
 ```
 const wechat-third = require('wechat-third');

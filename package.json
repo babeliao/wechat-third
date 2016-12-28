@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/babeliao/wechat-third/issues"
   },
-  "homepage": "https://github.com/babeliao/wechat-third#readme"
+  "homepage": "https://github.com/babeliao/wechat-third#readme",
+  "dependencies": {
+    "xml2js": "^0.4.17"
+  }
 }

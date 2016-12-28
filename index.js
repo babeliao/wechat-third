@@ -209,6 +209,57 @@ Wxthird.prototype.wxcallback = async function (body) {
     }
 }
 
-function getComponentAccessToken(){
+function async getComponentAccessToken(){
 
+    var wxthirdModel = await this.getTokenObj();
+    var verifyTicket = await this.getVerifyTicket();
+    console.log('wxthirdModel.component_access_token_update_time: '+wxthirdModel.component_access_token_update_time+'   new Date().getTime(): '+new Date().getTime())
+    if(wxthirdModel.component_access_token == null || new Date().getTime() > wxthirdModel.component_access_token_update_time){
+        console.log('start https');
+        var jsonRes = await new Promise(function (resolve, reject) {
+
+            var data = JSON.stringify({
+                component_appid: this.appid,
+                component_appsecret: this.appsecret,
+                component_verify_ticket: verifyTicket
+            });
+            var options = {
+                hostname: 'api.weixin.qq.com',
+                path: "/cgi-bin/component/api_component_token",
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; encoding=utf-8',
+                    'Content-Length': Buffer.byteLength(data)
+                }
+            };
+
+            var req = https.request(options, function (res) {
+                console.log('STATUS: ' + res.statusCode);
+                console.log('HEADERS: ' + JSON.stringify(res.headers));
+                res.setEncoding('utf8');
+                res.on('data', function (chunk) {
+                    console.log('BODY: ' + chunk);
+                    resolve(JSON.parse(chunk));
+                });
+            });
+            req.on('error', function (e) {
+                console.log('problem with request: ' + e.message);
+                reject(new Error('http failed'));
+            });
+            req.write(data);
+            req.end();
+
+        });
+        console.log('end https');
+        var expireTime = (new Date().getTime()) + (jsonRes.expires_in - 100) * 1000;
+        console.log('model.t_wxthird_base.update component_access_token_update_time: '+expireTime);
+        var newwxthirdModel = {
+            component_access_token: jsonRes.component_access_token,
+            component_access_token_update_time: expireTime
+        }
+        this.saveTokenObj(newwxthirdModel);
+
+        return jsonRes.component_access_token;
+    }
+    return wxthirdModel.component_access_token;
 }

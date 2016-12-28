@@ -1,6 +1,6 @@
 {
   "name": "wechat-third",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "公众号第三方平台SDK，五分钟通过微信全网发布检测",
   "main": "index.js",
   "scripts": {

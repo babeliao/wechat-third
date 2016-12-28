@@ -75,8 +75,11 @@ router.post('/event/authorize', async function (ctx, next) {
 //公众号消息与事件接收URL
 router.post('/event/authorize', async function (ctx, next) {
 
-	var res = await wxthird.wxcallback(ctx.request.body);
-    ctx.body = res;
+    //判断是微信全网测试专用公众号
+    if(ctx.params.APPID == 'wx570bc396a51b8ff8'){
+	    var res = await wxthird.wxcallback(ctx.request.body);
+        ctx.body = res;
+    }
 });
 
 

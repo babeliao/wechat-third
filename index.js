@@ -263,3 +263,5 @@ function async getComponentAccessToken(){
     }
     return wxthirdModel.component_access_token;
 }
+
+module.exports = Wxthird;
